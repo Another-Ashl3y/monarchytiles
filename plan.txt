@@ -1,0 +1,58 @@
+TILES
+	[TERRAIN]
+	Grass
+		0.0 < height < 0.5 && temperature < 0.6
+	Lake
+		0.7 < moisture
+	Sea
+		-0.6 < height < -0.3
+	Ocean
+		-0.8 < height < -0.6
+	Void
+		height < -0.8
+	Sand
+		-0.3 < height < 0.0 || 0.6 < temperature
+	Mountain
+		0.5 < height
+	Snow
+		temperature < 0.0
+	[SETTLEMENTS]
+	Tents		(starting settlement)
+		
+	Village
+		max population: 200
+		storage: 4000 Units
+	[GATHERING]
+	Mining
+		
+	Farming
+		
+	Plantation
+
+	Water Channel
+		
+ENTITIES
+	Humans
+		size
+			// If an intake reaches below 0 it resets and the population (size) decreases
+		food_intake
+		water_intake
+	Army
+		size
+		level
+	Fog Of War
+		owner		// does not appear for owner or enemies within a certain distance
+	
+	
+RESOURCES
+	Wood
+	Refined Wood
+	Stone
+	Refined Stone
+	Iron Ore
+	Iron
+CRAFTING
+	Refinary
+		Wood -> Refined Wood
+		Stone -> Refined Stone
+		Iron Ore -> Iron

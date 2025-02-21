@@ -1,8 +1,23 @@
 # Design
 
 
+To breakdown the design of this project I will be using a tree diagram. The children are the requirements to make the parent like so:
 
 
+```
+Project
+├── requirement 1
+│   ├── nested requirement 1
+│   └── nested requirement 2
+└── requirement 2
+```
+
+That can be found in [This file](RequirementTree.md)
+
+---
+
+
+Due to it being online I also need to design a database which I will be using https://app.quickdatabasediagrams.com to do.
 
 
 

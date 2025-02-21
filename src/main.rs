@@ -35,7 +35,7 @@ async fn main() {
         let x_range = (min_x.floor() as isize).max(0)..(max_x.ceil() as isize).min(world.dimensions.0 as isize);
         let y_range = (min_y.floor() as isize).max(0)..(max_y.ceil() as isize).min(world.dimensions.1 as isize);
         
-
+        
         for chunk_x in x_range {
             for chunk_y in y_range.clone() {
                 let chunk_index = chunk_y as usize * world.dimensions.0 + chunk_x as usize;
@@ -85,13 +85,16 @@ async fn main() {
         if is_key_pressed(KeyCode::F) {
             fast_mode = !fast_mode;
         }
+        let delta = get_frame_time();
+        let prev_scale = scale;
         if is_key_down(KeyCode::W) {
-            scale += 1.0;
+            scale += delta * 10.0;
         }
         if is_key_down(KeyCode::S) {
-            scale -= 1.0;
+            scale -= delta * 10.0;
         }
-
+        
+        camera_pos *= scale/prev_scale;
         next_frame().await
     }
 }

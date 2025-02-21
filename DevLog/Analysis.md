@@ -2,7 +2,9 @@
 
 ## Introduction
 
-The problem to be solved is: an online multiplayer game that is real time and allows you to create civilisations and go to war with other players. What is this for? Entertainment.
+The problem to be solved is: an online multiplayer game that is real time and allows you to create civilisations and go to war with other players. What is this for? Entertainment. Or to be put bluntly: My laptop is dead and I want to play games with my friends but the games they have don't run on linux which my desktop has so I'm going to make a game that runs on linux and windows and then play it with my friend.
+
+I'd like to connect people from different locations so it's most suited to be a comuter game and therefore needs a computer and internet connection to play it. Internet is the fastest form of communication and data transfer so making an online game so I can play with my friend who is not at my house makes more sense than making a board game and sending letters of our moves (which would be way too slow). However using a computer and networking means I need to learn some tools to make this possible including port forwarding so I can securely connect to my friend. The actual code will make use of procedural programming due to how much more manageable it makes things and the language I'll use is rust because it's fast and well structured and forces safe memory usage. Rust is also object orientated (uses structs in place of classes) so the code will have many functions to consider. It also doesn't allow global muteable variables due to its memory safety, which will make the project slightly more challenging but all the more fun to code.
 
 The game will be called "MonarchyTiles" (or "MT" for short. This will be how the project will be referred to from now on) as it will be a 2D tile based system and players can own certain tiles and be a "monarch" to them.
 
@@ -48,71 +50,34 @@ The eight question asked if people used windows or linux. This was asked as if e
 
 The last question was open ended and allowed users to suggest something to add to the game. My favourite answer is "ability to create alliances" which would be a very cool and useful tool to have. Another answer was "a good management system" which I hope to succeed in making.
 
-## Problems
 
-### Networking
+## Proposed solution
 
-As the game is online multiplayer and online there needs to be some way of connecting to other players. As running my own servers would be expensive and also have risks because I'm opening up my network to the world, I will likely rent servers or use free ones. A common option is AWS but I have no idea how to use that so I will likely use render, which is a website another student in my class used to make a chat website. The server doesn't need to go under much stress because players aren't constantly moving, however, if tile updates are sent by the player and the server just accepts it then this is an opening for hacks and creates an unfair advantage in the game. We also have to consider the risk of malicous attacks to the server which seek to shut it down. This means we have to rate limit users from sending data and also the size of packets players send to the server have to be as small as they can get.
+Firstly the specifications I am working with on my home computer are as follows:
 
-
-## Algorithms
-
-### Chunking
-
-With a tile based game that will have very large map sizes, the storing and rendering of tiles must be very optimised so the game runs as smooth as possible. The first prototype for this is to use chunking. The first time I wrote a chunking algorithm I stored the x and y position of the chunk and the tile.
-
-```rs
-struct Chunk {
-    x: isize,
-    y: isize,
-    tiles: Vec<Tile>,
-}
-struct Tile {
-   x: f32,
-   y: f32,
-}
 ```
-
-Which was extremely inefficient because all chunks held the same number of tiles so the `tiles: Vec<Tile>` could be replaced with a static array and then the index of the tile in that array could be used to get the coordinates instead of unnecessarily taking up 64 bits per tile.
-
-This was later refined to be:
-
-```rs 
-const CHUNK_SIZE: usize = 16; // Isn't necessary to be 16 but it is a common size for chunks in games
-
-struct Chunk {
-    x: isize,
-    y: isize,
-    tiles: [Tile; CHUNK_SIZE*CHUNK_SIZE],
-}
-
-struct Tile();
+OS: Arch Linux x86_64 
+Host: HP Compaq Elite 8300 SFF 
+Kernel: 6.13.2-arch1-1 
+Resolution: 1680x1050, 1600x1200 
+CPU: Intel i5-3470 (4) @ 3.600GHz 
+GPU: NVIDIA GeForce GT 1030 
+Memory: 11904MiB
 ```
+This is quite different to most computers and likely less performant than what most people have these days. This also means that if the game runs on my computer then it will run on most computers which is great.
 
-This is much better and to get the position of the tiles you just enumerate through the list to get the index and the tile and get the coordinates through `(i % CHUNK_SIZE, i / CHUNK_SIZE)`. As both `i` and `CHUNK_SIZE` are of the type `usize` no type conversion has to be done and the values are rounded appropriately.
-This can be taken a step further as the chunks don't need to store their position. If we have a terrain struct that contains an array, it can act like the tiles array in the chunks. All we need is the dimensions of the map so that the x and y positions can be extracted properly and then fill the array with chunks. This results in the following:
+The success criteria is:
 
-```rs
-const CHUNK_SIZE: usize = 16;
++ I can make new tiles to expand an empire and send troops to fight other players.
++ I can play the game and automate some tasks within the game
++ I can connect to my friend over the internet through a code and we can both play the game at the same time
++ I can save and pause the game for something like maintanence or just saving electricity
++ I can create a custom flag inside the game that other players can view and use to identify me and they can do the same so I may identify them
++ Some sort of way of communicating with players in game
++ There's a single player mode with bot kingdoms
++ Players can connect to a headless server which handles the connection and things that shouldn't be managed by any one player.
 
-struct Tile();
-
-struct Chunk {
-    tiles: [Tile; CHUNK_SIZE*CHUNK_SIZE], // Square area
-}
-
-struct Terrain {
-    position: Vec2,
-    width: usize,
-    height: usize,
-    chunks: Vec<Chunk>,
-}
-```
-
-The macroquad library includes a 2D vector data type which stores an `x: f32` and a `y: f32`. We use this datatype to store a root position of `Terrain` because otherwise the terrain would always be based off (0,0) and would only expand in the positive directions. An option could be to center the terrain but if we want other tiles to overlap and they are not properply sized then they won't be in the correct position with the tilemap`
+If all these are possible then it is a success.
 
 
-But what information does the tile need to store? Having a tilemap of nothing would be quite pointless so the tile struct needs to store something to signify what it represents. At first I stored the value generated by the perlin noise function but that is an `f32` which is 32 bits to store a value that hardly ever changes so clearly an enum value would be better.
-
-What tiles does the player need? Firstly, water is an incredibly important resource and forcing players to manage that could make the game quite interesting. It could also effect ground stability. A way of implementing this could be through perlin noise to determine the water density of the land.
 

@@ -7,7 +7,7 @@ pub const CHUNK_SIZE: usize = 10;
 const VOID_CHUNK: [Tile; CHUNK_SIZE.pow(2)] = [Tile::Empty; CHUNK_SIZE.pow(2)];
 
 #[derive(Debug, Clone, Copy, PartialEq)]
-enum Direction {
+pub enum Direction {
     Stay,
     L,
     LU,

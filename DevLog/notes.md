@@ -11,6 +11,26 @@ Currently the file tree is:
     ├── tileset.rs
     └── tiles.rs
 ```
-To add multiple programs, I use workspace members
+To add multiple programs, I use workspace members in the root Cargo.toml file and I also created a server crate: 
+
+```toml
+[workspace]
+resolver = "2"
+members  = ["client", "server"]
+```
+
+
+Finally the directory (removing assets) looks like:
+```
+.
+├── client
+│   ├── Cargo.toml
+│   └── src
+
+│       ├── main.rs
+│       ├── tileset.rs
+│       └── tiles.rs
+├── .gitignore
+```
 
 -----

@@ -26,11 +26,13 @@ Finally the directory (removing assets) looks like:
 ├── client
 │   ├── Cargo.toml
 │   └── src
-
 │       ├── main.rs
 │       ├── tileset.rs
 │       └── tiles.rs
-├── .gitignore
+└── server
+    ├── Cargo.toml
+    └── src
+        └── main.rs
 ```
 
 -----

@@ -61,12 +61,6 @@ async fn main() {
                                 dest_size: Some(vec2(scale, scale)),
                                 ..Default::default()
                             });
-                            //draw_rectangle(
-                            //    x*scale + camera_pos.x + world.position.x, 
-                            //    y*scale + camera_pos.y + world.position.y, 
-                            //    scale, scale, 
-                            //    tile.color()
-                            //);
                         }
                     }
                     _=>()
@@ -98,4 +92,13 @@ async fn main() {
         next_frame().await
     }
 }
+
+
+struct Game {
+    textures: Vec<Texture2D>,
+    fast_draw: bool,
+    terrain: 
+}
+
+
 

@@ -6,26 +6,14 @@ pub const LIGHTBLUE: Color = Color{r: 0.6, g: 0.6, b: 1.0, a: 1.0};
 pub const CHUNK_SIZE: usize = 10;
 const VOID_CHUNK: [Tile; CHUNK_SIZE.pow(2)] = [Tile::Empty; CHUNK_SIZE.pow(2)];
 
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum Direction {
-    Stay,
-    L,
-    LU,
-    LR,
-    LD,
-    LUR,
-    LUD,
-    LRD,
-    LURD,
-    
-}
+
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Tile {
     Err,
     Empty,
     Grass,
-    Forest(Direction),
+    Forest,
     DenseForest,
     Lake,
     Sea,
@@ -47,7 +35,7 @@ impl Tile {
             return Tile::DenseForest
         }
         if 0.5 < height {
-            return Tile::Forest(Direction::Stay)
+            return Tile::Forest
         }
         if 0.0 < height {
             if 0.7 < moisture {

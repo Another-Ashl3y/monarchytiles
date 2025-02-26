@@ -7,7 +7,7 @@ const DENSE_FOREST: usize = 1;
 
 pub fn get_texture(tile: Tile) -> usize {
     match tile {
-        Tile::Forest(_) => FOREST,
+        Tile::Forest => FOREST,
         Tile::DenseForest => DENSE_FOREST,
         _=>0,
     }
@@ -15,10 +15,10 @@ pub fn get_texture(tile: Tile) -> usize {
 
 pub async fn load_textures() -> Vec<Texture2D> {
     let textures = vec![
-        (load_texture("src/assets/images/Forest.png").await,
-            "src/assets/images/Forest.png"),
-        (load_texture("src/assets/images/Dense_Forest.png").await,
-            "src/assets/images/Dense_Forest.png")
+        (load_texture("client/src/assets/images/Forest.png").await,
+            "client/src/assets/images/Forest.png"),
+        (load_texture("client/src/assets/images/Dense_Forest.png").await,
+            "client/src/assets/images/Dense_Forest.png")
     ];
     
     let mut loaded_textures = Vec::new();
